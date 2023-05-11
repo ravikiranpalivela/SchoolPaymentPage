@@ -1,0 +1,260 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="cartItem"
+            type="com.ravikiran.schoolpaymentpage.common.model.FeeMasterdata" />
+
+        <variable
+            name="cart"
+            type="com.ravikiran.schoolpaymentpage.common.model.FeeMasterdata" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:padding="4dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/item_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:checked="@{cartItem.isChecked}"
+                        android:text="@{cartItem.feeStructureField}"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="Fee Structure" />
+
+                    <TextView
+                        android:id="@+id/tv_total_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:text="@{cartItem.amountValue.toString()}"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:visibility="@{cartItem.isEnabled? View.GONE : View.VISIBLE}"
+                        tools:text="1000" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ic_down_24"
+                        android:visibility="@{cartItem.isEnabled? View.GONE : View.VISIBLE}" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="8dp"
+                    android:visibility="@{cartItem.isEnabled? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:id="@+id/img_project_status"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:background="#fff"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_late_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Late Fee:"
+                        android:visibility="@{cartItem.latefee == null || Double.valueOf(cartItem.latefee) == 0 ? View.GONE : View.VISIBLE}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_disc_amt_value"
+                        tools:text="Late Fee:" />
+
+                    <TextView
+                        android:id="@+id/tv_paid_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Paid Amount:"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/img_project_status"
+                        tools:text="Paid Amount:" />
+
+                    <TextView
+                        android:id="@+id/tv_tot_fee_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Total Fee Amount:"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_tot_fee_amt_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@{cartItem.amountValue.toString()}"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/guideline4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Total fee amount value:" />
+
+                    <TextView
+                        android:id="@+id/tv_disc_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Discount:"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_paid_amt"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Discount:" />
+
+                    <TextView
+                        android:id="@+id/tv_disc_amt_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@{cartItem.discount}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintStart_toStartOf="@+id/guideline4"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_paid_amt"
+                        tools:text="Discount" />
+
+                    <TextView
+                        android:id="@+id/tv_late_fee_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@{cartItem.latefee}"
+                        android:textColor="@android:color/black"
+                        android:visibility="@{cartItem.latefee == null || Double.valueOf(cartItem.latefee) == 0 ? View.GONE : View.VISIBLE}"
+                    android:textSize="@dimen/sp_14"
+                        app:layout_constraintStart_toStartOf="@+id/guideline4"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_disc_amt_value"
+                        tools:text="Late Fee:" />
+
+                    <TextView
+                        android:id="@+id/tv_paid_amt_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@{cartItem.paidAmount}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintStart_toStartOf="@+id/guideline4"
+                        app:layout_constraintTop_toBottomOf="@+id/img_project_status"
+                        tools:text="Paid Amount" />
+
+                    <TextView
+                        android:id="@+id/tv_curr_tot_fee_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current Payment:"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_late_fee" />
+
+                    <TextView
+                        android:id="@+id/tv_curr_tot_fee_amt_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{cartItem.amountValue.toString()}"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/tv_curr_tot_fee_amt"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_late_fee_value"
+                        tools:text="Current Payment:" />
+
+                    <EditText
+                        android:id="@+id/edt_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/round_border"
+                        android:padding="4dp"
+                        android:text="@{cartItem.amountValue.toString()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_curr_tot_fee_amt_value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_curr_tot_fee_amt_value"
+                        tools:text="1000" />
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.04" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.45" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
